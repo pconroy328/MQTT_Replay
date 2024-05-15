@@ -96,12 +96,6 @@ def publish_to_mqtt(file_path, mqtt_broker, new_topic_prefix, replace_dateTime):
                         print('Exception, message probably missing dateTime')
                         delay_seconds = 0
 
-                    if replace_dateTime:
-                        # Get today's date and time in the required format
-                        current_date_time = datetime.now().strftime('%Y-%m-%dT%H:%M:%S%z')
-                        # Update the dateTime field with today's date and time
-                        data['dateTime'] = current_date_time
-
                     if new_topic_prefix is not None:
                         try:
                             old_topic = data['topic']
@@ -112,6 +106,13 @@ def publish_to_mqtt(file_path, mqtt_broker, new_topic_prefix, replace_dateTime):
 
                     ## Now we delay the right amount of time between the messages
                     time.sleep(delay_seconds)
+
+                    if replace_dateTime:
+                        # Get today's date and time in the required format
+                        current_date_time = datetime.now().strftime('%Y-%m-%dT%H:%M:%S%z')
+                        # Update the dateTime field with today's date and time
+                        data['dateTime'] = current_date_time
+
                     ## Send it!
                     #print(json.dumps(data));
                     #input('press enter')
